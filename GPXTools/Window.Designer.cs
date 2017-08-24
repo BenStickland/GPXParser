@@ -28,62 +28,64 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            this.mainTable = new System.Windows.Forms.DataGridView();
-            this.Speed = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.mainChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            ((System.ComponentModel.ISupportInitialize)(this.mainTable)).BeginInit();
+            this.map = new GMap.NET.WindowsForms.GMapControl();
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).BeginInit();
             this.SuspendLayout();
             // 
-            // mainTable
-            // 
-            this.mainTable.AllowUserToAddRows = false;
-            this.mainTable.AllowUserToDeleteRows = false;
-            this.mainTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.mainTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Speed});
-            this.mainTable.Location = new System.Drawing.Point(13, 13);
-            this.mainTable.Name = "mainTable";
-            this.mainTable.ReadOnly = true;
-            this.mainTable.Size = new System.Drawing.Size(552, 510);
-            this.mainTable.TabIndex = 0;
-            // 
-            // Speed
-            // 
-            this.Speed.HeaderText = "Speed";
-            this.Speed.Name = "Speed";
-            this.Speed.ReadOnly = true;
-            // 
             // mainChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.mainChart.ChartAreas.Add(chartArea1);
+            chartArea2.Name = "ChartArea1";
+            this.mainChart.ChartAreas.Add(chartArea2);
             this.mainChart.Location = new System.Drawing.Point(572, 13);
             this.mainChart.Name = "mainChart";
             this.mainChart.Size = new System.Drawing.Size(595, 510);
             this.mainChart.TabIndex = 1;
             this.mainChart.Text = "Speed";
             // 
+            // map
+            // 
+            this.map.Bearing = 0F;
+            this.map.CanDragMap = true;
+            this.map.EmptyTileColor = System.Drawing.Color.Navy;
+            this.map.GrayScaleMode = false;
+            this.map.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.map.LevelsKeepInMemmory = 5;
+            this.map.Location = new System.Drawing.Point(12, 12);
+            this.map.MarkersEnabled = true;
+            this.map.MaxZoom = 20;
+            this.map.MinZoom = 10;
+            this.map.MouseWheelZoomEnabled = true;
+            this.map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionWithoutCenter;
+            this.map.Name = "map";
+            this.map.NegativeMode = false;
+            this.map.PolygonsEnabled = true;
+            this.map.RetryLoadTile = 0;
+            this.map.RoutesEnabled = true;
+            this.map.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.map.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.map.ShowTileGridLines = false;
+            this.map.Size = new System.Drawing.Size(554, 511);
+            this.map.TabIndex = 2;
+            this.map.Zoom = 15D;
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1179, 548);
+            this.Controls.Add(this.map);
             this.Controls.Add(this.mainChart);
-            this.Controls.Add(this.mainTable);
             this.Name = "Window";
             this.Text = "Window";
-            ((System.ComponentModel.ISupportInitialize)(this.mainTable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView mainTable;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Speed;
         private System.Windows.Forms.DataVisualization.Charting.Chart mainChart;
+        private GMap.NET.WindowsForms.GMapControl map;
     }
 }
