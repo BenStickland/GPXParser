@@ -8,25 +8,28 @@ namespace GPXTools
 {
     public class GPXPoint
     {
-        public string value { get; set; }
         public double lat { get; set; }
         public double lon { get; set; }
+        public double elevation { get; set; }
+        public DateTime time { get; set; }
+        public int cadence { get; set; }
+        public int heartRate { get; set; }
+        public int power { get; set; }
 
         public GPXPoint()
         {
 
         }
 
-        public GPXPoint(String newValue)
+        public GPXPoint(double newLat, double newLong)
         {
-            this.value = newValue;
-        }
-
-        public GPXPoint(String newValue, double newLat, double newLong)
-        {
-            this.value = newValue;
             this.lat = newLat;
             this.lon = newLong;
+        }
+
+        public String printString()
+        {
+            return "Lat : " + this.lat.ToString() + ", Long : " + this.lon.ToString();
         }
     }
 }

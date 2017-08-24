@@ -15,6 +15,7 @@ namespace GPXTools
         {
             GPXFile parsedFile = new GPXFile();
             String allData = File.ReadAllText(fileName);
+
             String[] elements = allData.Split('<');
 
             //Parse the intro details
@@ -26,21 +27,11 @@ namespace GPXTools
             i++;
 
             int startMain = i;
-            String tempString = "";
             GPXPoint tempPoint = new GPXPoint();
 
             //Loop through the main part of the file
-            for (i = startMain; i < 10000; i++)
+            for (i = startMain; i < elements.Length; i++)
             {
-                
-                //Remove final 2 letters if it has a \n at the end
-                if (elements[i].EndsWith("\\n")) { 
-                    tempString = tempString + elements[i].Remove(elements[i].Length - 2).ToString();
-                } else {
-                    tempString = tempString + elements[i].ToString();
-                }
-
-
                 //Get lat/long
                 if (elements[i].StartsWith("trkpt"))
                 {
@@ -56,20 +47,79 @@ namespace GPXTools
                     lon = lon.Remove(lon.Length - 3);
                     tempPoint.lon = Convert.ToDouble(lon);
                 }
-
-                //End the trackpoint
-                if(elements[i].ToString() == "/trkpt>\n")
+                else if (elements[i].StartsWith("ele>"))
                 {
-                    tempPoint.value = tempString;
+                    String elevation = elements[i].Remove(0, 4);
 
+                    try
+                    {
+                        tempPoint.elevation = Convert.ToDouble(elevation);
+                    }
+                    catch (FormatException ex)
+                    {
+                        Console.WriteLine("Error converting to float - Line No : " + i.ToString());
+                    }
+                }
+                else if (elements[i].StartsWith("time>"))
+                {
+                    String time = elements[i].Remove(0, 5);
+
+                    try
+                    {
+                        tempPoint.time = Convert.ToDateTime(time);
+                    }
+                    catch (FormatException ex)
+                    {
+                        Console.WriteLine("Error converting time to DateTime object - Line No : " + i.ToString());
+                    }
+                }
+                else if (elements[i].StartsWith("power>"))
+                {
+                    String power = elements[i].Remove(0, 6);
+
+                    try
+                    {
+                        tempPoint.power = Convert.ToInt32(power);
+                    }
+                    catch (FormatException ex)
+                    {
+                        Console.WriteLine("Error converting power to int - Line No : " + i.ToString());
+                    }
+                }
+                else if (elements[i].StartsWith("gpxtpx:hr>"))
+                {
+                    String heartRate = elements[i].Remove(0, 10);
+
+                    try
+                    {
+                        tempPoint.heartRate = Convert.ToInt32(heartRate);
+                    }
+                    catch (FormatException ex)
+                    {
+                        Console.WriteLine("Error converting heart rate to int - Line No : " + i.ToString());
+                    }
+                }
+                else if (elements[i].StartsWith("gpxtpx:cad>"))
+                {
+                    String cadence = elements[i].Remove(0, 11);
+
+                    try
+                    {
+                        tempPoint.cadence = Convert.ToInt32(cadence);
+                    }
+                    catch (FormatException ex)
+                    {
+                        Console.WriteLine("Error converting cadence to int - Line No : " + i.ToString());
+                    }
+                }
+                else if (elements[i].ToString() == "/trkpt>\n")
+                {
                     parsedFile.points.Add(tempPoint);
 
                     tempPoint = new GPXPoint();
-                    tempString = "";
                 }
             }
-
-
+            
             return parsedFile;
         }
     }
