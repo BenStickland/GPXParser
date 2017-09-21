@@ -12,9 +12,9 @@ namespace GPXTools
 
         //Raw Data
         private GPXFile file { get; set; }
-        private List<Double> rawDistances { get; set; }
-        private List<Double> rawSpeeds { get; set; }
-        private List<Double> rawElevations { get; set; }
+        public List<Double> rawDistances { get; set; }
+        public List<Double> rawSpeeds { get; set; }
+        public List<Double> rawElevations { get; set; }
         public List<Double[]> rawLatLong { get; set; }
 
         //Analysed Data

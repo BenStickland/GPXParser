@@ -9,6 +9,7 @@ namespace GPXTools
 {
     public class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
             Application.EnableVisualStyles();

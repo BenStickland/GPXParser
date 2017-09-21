@@ -17,24 +17,17 @@ namespace GPXTools
     {
         public Window()
         {
-            InitializeComponent();
-
-            doAnalysis();            
+            InitializeComponent();           
         }
 
         /// <summary>
         /// Perform analysis to be displayed
         /// </summary>
-        private void doAnalysis()
+        private void doAnalysis(String fileName)
         {
-            //GPX Files
-            String gpxPorkHill = @"C:\Users\Ben\Downloads\course_16727476229.gpx";
-            String gpxYTPYTriangle = @"C:\Users\Ben\Downloads\course_1705444855.gpx";
-            String gpxBurrator = @"C:\Users\Ben\Downloads\course_25774985017.gpx";
-
             //Initialise the parser and parse the file
             Parse parser = new Parse();
-            parser.fileName = gpxPorkHill;
+            parser.fileName = fileName;
             GPXFile parsedFile = parser.parseFile();
 
             //Initialise the analysis object
@@ -49,6 +42,8 @@ namespace GPXTools
 
             //Plot map data
             plotMapData(analsyer.rawLatLong);
+
+            displayDataGridData(analsyer.rawLatLong, analsyer.rawSpeeds, analsyer.rawElevations);
         }
 
         /// <summary>
@@ -58,6 +53,9 @@ namespace GPXTools
         /// <param name="elevations">List of elevation data to be shown</param>
         private void plotGraphData(List<Double> speeds, List<Double> elevations)
         {
+            //Clear old data
+            mainChart.Series.Clear();
+
             //Create the series of data for the graph
             var seriesSpeed = new Series("Speed");
             var seriesElevation = new Series("Elevation");
@@ -93,6 +91,9 @@ namespace GPXTools
         /// <param name="latLongData">A list of lat/long data points to be displayed</param>
         private void plotMapData(List<Double[]> latLongData)
         {
+            //Clear old data
+            map.Overlays.Clear();
+
             //Create the overlay and point list
             GMapOverlay courseOverlay = new GMapOverlay("course");
             List<PointLatLng> points = new List<PointLatLng>();
@@ -113,5 +114,56 @@ namespace GPXTools
             map.SetPositionByKeywords(latLongData[0][0].ToString() + ", " + latLongData[0][1].ToString());
             map.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;
         }
+
+        /// <summary>
+        /// Display all the data in a grid
+        /// </summary>
+        /// <param name="latLongData"></param>
+        /// <param name="speeds"></param>
+        /// <param name="elevations"></param>
+        private void displayDataGridData(List<Double[]> latLongData, List<Double> speeds, List<Double> elevations)
+        {
+            dataGrid.Columns.Clear();
+            dataGrid.Rows.Clear();
+
+            dataGrid.Columns.Add("clmLatitude", "Latitude");
+            dataGrid.Columns.Add("clmLongitude", "Longitude");
+            dataGrid.Columns.Add("clmSpeed", "Speed");
+            dataGrid.Columns.Add("clmElevation", "Elevation");
+
+            if (latLongData.Count - 1 == speeds.Count && speeds.Count == elevations.Count)
+            {
+                dataGrid.Rows.Add(latLongData[0][0], latLongData[0][1], "", "");
+
+                for (int i = 1; i < latLongData.Count; i++)
+                {
+                    dataGrid.Rows.Add(latLongData[i][0], latLongData[i][1], speeds[i - 1], elevations[i - 1]);
+                }
+            }
+        }
+
+        #region Events
+
+        private void loadFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+            openFileDialog1.InitialDirectory = @"D:\Ben\Documents\GPX Data";
+            openFileDialog1.Title = "Select a GPX file";
+
+            openFileDialog1.CheckFileExists = true;
+            openFileDialog1.CheckPathExists = true;
+
+            openFileDialog1.DefaultExt = "gpx";
+            openFileDialog1.Filter = "GPX files (*.gpx)|*.gpx";
+            openFileDialog1.FilterIndex = 1;
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                doAnalysis(openFileDialog1.FileName);
+            }
+        }
+
+        #endregion
     }
 }
