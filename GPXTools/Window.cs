@@ -148,7 +148,7 @@ namespace GPXTools
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
-            openFileDialog1.InitialDirectory = @"D:\Ben\Documents\GPX Data";
+            openFileDialog1.InitialDirectory = Environment.SpecialFolder.MyDocuments.ToString();
             openFileDialog1.Title = "Select a GPX file";
 
             openFileDialog1.CheckFileExists = true;

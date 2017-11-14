@@ -55,7 +55,7 @@ namespace GPXTools
                     {
                         tempPoint.elevation = Convert.ToDouble(elevation);
                     }
-                    catch (FormatException ex)
+                    catch 
                     {
                         Console.WriteLine("Error converting to float - Line No : " + i.ToString());
                     }
@@ -68,7 +68,7 @@ namespace GPXTools
                     {
                         tempPoint.time = Convert.ToDateTime(time);
                     }
-                    catch (FormatException ex)
+                    catch
                     {
                         Console.WriteLine("Error converting time to DateTime object - Line No : " + i.ToString());
                     }
@@ -81,7 +81,7 @@ namespace GPXTools
                     {
                         tempPoint.power = Convert.ToInt32(power);
                     }
-                    catch (FormatException ex)
+                    catch
                     {
                         Console.WriteLine("Error converting power to int - Line No : " + i.ToString());
                     }
@@ -94,7 +94,7 @@ namespace GPXTools
                     {
                         tempPoint.heartRate = Convert.ToInt32(heartRate);
                     }
-                    catch (FormatException ex)
+                    catch
                     {
                         Console.WriteLine("Error converting heart rate to int - Line No : " + i.ToString());
                     }
@@ -107,7 +107,7 @@ namespace GPXTools
                     {
                         tempPoint.cadence = Convert.ToInt32(cadence);
                     }
-                    catch (FormatException ex)
+                    catch
                     {
                         Console.WriteLine("Error converting cadence to int - Line No : " + i.ToString());
                     }
